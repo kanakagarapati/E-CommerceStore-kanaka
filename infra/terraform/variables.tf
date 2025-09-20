@@ -17,7 +17,7 @@ variable "instance_type" {
 
 variable "ssh_key_name" {
   type        = string
-  default     = null   # set to existing key pair name if you want SSH
+  default     = "kanakamanoj-gkm"   # set to existing key pair name if you want SSH
 }
 
 variable "dockerhub_ns" {
