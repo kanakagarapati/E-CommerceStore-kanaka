@@ -1,0 +1,48 @@
+#!/bin/bash
+set -euxo pipefail
+
+# Install Docker
+dnf update -y
+dnf install -y docker
+systemctl enable docker
+systemctl start docker
+
+# Create network so containers discover each other by name
+docker network create ecom-net || true
+
+# Pull images
+for SVC in frontend user products orders cart; do
+  docker pull ${dockerhub_ns}/${SVC}-service:1.0
+done
+
+# Clean any prior runs (if user-data re-executes)
+for SVC in frontend user products orders cart; do
+  docker rm -f ${SVC}-svc || true
+done
+
+# Run backends (internal only)
+docker run -d --name user-svc --network ecom-net \
+  -e PORT=3001 -e SVC_NAME=user \
+  ${dockerhub_ns}/user-service:1.0
+
+docker run -d --name products-svc --network ecom-net \
+  -e PORT=3002 -e SVC_NAME=products \
+  ${dockerhub_ns}/products-service:1.0
+
+docker run -d --name orders-svc --network ecom-net \
+  -e PORT=3003 -e SVC_NAME=orders \
+  ${dockerhub_ns}/orders-service:1.0
+
+docker run -d --name cart-svc --network ecom-net \
+  -e PORT=3004 -e SVC_NAME=cart \
+  ${dockerhub_ns}/cart-service:1.0
+
+# Frontend exposed to public (host port -> container 3000)
+docker run -d --name frontend-svc --network ecom-net \
+  -e PORT=3000 -e SVC_NAME=frontend \
+  -p ${frontend_external_port}:3000 \
+  ${dockerhub_ns}/frontend-service:1.0
+
+# Log container status
+sleep 3
+docker ps
