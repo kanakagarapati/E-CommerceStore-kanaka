@@ -22,7 +22,7 @@ variable "ssh_key_name" {
 
 variable "dockerhub_ns" {
   type        = string
-  description = "Docker Hub namespace (username)"
+  description = "garapatimanoj"
 }
 
 variable "frontend_external_port" {
