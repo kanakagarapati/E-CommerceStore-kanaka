@@ -1,0 +1,27 @@
+{
+  "name": "e-commercestore-kanaka",
+  "version": "1.0.0",
+  "description": "A full-stack MERN e-commerce application built with microservices architecture, featuring 4 separate Node.js backend services and a React frontend.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kanakagarapati/E-CommerceStore-kanaka.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kanakagarapati/E-CommerceStore-kanaka/issues"
+  },
+  "homepage": "https://github.com/kanakagarapati/E-CommerceStore-kanaka#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}

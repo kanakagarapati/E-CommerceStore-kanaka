@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  selector:
+    app: frontend
+  type: NodePort  # or LoadBalancer if using EKS
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30000  # Access via localhost:30000 or <NodeIP>:30000
